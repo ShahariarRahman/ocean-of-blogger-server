@@ -23,8 +23,13 @@ const run = async () => {
         });
         app.post("/blog", async (req, res) => {
             const blog = req.body;
-            const blogs = await blogsCollection.insertOne(blog);
-            res.send(blogs);
+            const result = await blogsCollection.insertOne(blog);
+            res.send(result);
+        });
+        app.delete("/blog/:id", async (req, res) => {
+            const id = req.params.id;
+            const result = await blogsCollection.deleteOne({ _id: ObjectId(id) });
+            res.send(result);
         });
     }
     finally { };
