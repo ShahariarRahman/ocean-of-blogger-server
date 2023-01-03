@@ -21,14 +21,19 @@ const run = async () => {
             const blogs = await blogsCollection.find().toArray();
             res.send(blogs);
         });
+        app.post("/blog", async (req, res) => {
+            const blog = req.body;
+            const blogs = await blogsCollection.insertOne(blog);
+            res.send(blogs);
+        });
     }
-    finally { }
+    finally { };
 };
 run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello World!');
 });
 
 app.listen(port, () => {
