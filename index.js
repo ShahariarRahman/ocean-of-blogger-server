@@ -26,11 +26,23 @@ const run = async () => {
             const result = await blogsCollection.insertOne(blog);
             res.send(result);
         });
+        app.patch("/blog", async (req, res) => {
+            const blog = req.body;
+            const filter = { _id: ObjectId(req.body._id) };
+            delete blog._id;
+
+            const updateDoc = {
+                $set: blog
+            };
+            const result = await blogsCollection.updateOne(filter, updateDoc);
+            res.send(result);
+        });
         app.delete("/blog/:id", async (req, res) => {
             const id = req.params.id;
             const result = await blogsCollection.deleteOne({ _id: ObjectId(id) });
             res.send(result);
         });
+
     }
     finally { };
 };
